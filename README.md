@@ -35,3 +35,16 @@ Simple readline-based CLI for Go programs, that probably has lots of bugs
     ```
     repl.Serve()
     ```
+
+### How do I handle SIGINT (Ctrl+C) and other signals?
+
+As simple as adding somehing like this to your code
+
+    go func() {
+        for s := range repl.Signals {
+            if s == os.Interrupt {
+                log.Printf("Interrupted")
+                os.Exit(42)
+            }
+        }
+    }()

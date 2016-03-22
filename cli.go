@@ -84,7 +84,7 @@ func (repl *REPL) Serve() {
 		return completions
 	})
 
-    // Ctrl+C handling, doesn't work properly
+    // SIGINT and other signals are forwarded for outside handling
     intCh := make(chan os.Signal, 1)
     signal.Notify(intCh, os.Interrupt)
     go func(ch chan os.Signal) {
@@ -97,6 +97,7 @@ func (repl *REPL) Serve() {
 	// This is generally what people expect in a modern Readline-based app
 	readline.ParseAndBind("TAB: menu-complete")
 
+	// This is not default readline behavior, but suits me well
 	readline.SetCatchSignals(0)
 	readline.ClearSignals()
 
