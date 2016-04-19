@@ -117,10 +117,10 @@ L:
 			break L // exit loop
 		case repl.understands(*result):
 			repl.handle(*result)
+			readline.AddHistory(*result) // Allow user to recall this line
 		default:
 			fmt.Printf("Unknown command '%s', try 'help'\n", *result)
 			continue
 		}
-		readline.AddHistory(*result) // Allow user to recall this line
 	}
 }
